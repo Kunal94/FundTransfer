@@ -30,17 +30,21 @@ public class AccountService {
 			throw new InvalidAccountException("Invalid Destination Account");
 		}
 		
-		final Audit beforeTransationAudit = new Audit();
-		
-		auditService.insertAudit(beforeTransationAudit);
-		
+		auditService.insertAudit(loggedAuditDetails(userTransaction));
 		if (accountDAO.transferBalance(userTransaction)) {
 			observable.doNotify();
 		}
 		
-		final Audit afterTransationAudit = new Audit();
-		auditService.insertAudit(afterTransationAudit);
-		
+		auditService.insertAudit(loggedAuditDetails(userTransaction));
+	}
+	
+	private Audit loggedAuditDetails(UserTransaction userTransaction) {
+		Audit audit = new Audit();
+		audit.setFromAccountId(userTransaction.getFromAccountId());
+		audit.setToAccountId(userTransaction.getToAccountId());
+		audit.setAmount(userTransaction.getAmountTobeTransferred());
+		audit.setUserId(userTransaction.getUserId());
+		return audit;
 	}
 
 }

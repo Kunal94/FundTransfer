@@ -6,6 +6,7 @@ public class UserTransaction {
 	private Long fromAccountId;
 	private Long toAccountId;
 	private Long amountTobeTransferred;
+	private Long userId;
 	
 	
 	public Long getUserTransactionId() {
@@ -32,6 +33,11 @@ public class UserTransaction {
 	public void setAmountTobeTransferred(Long amountTobeTransferred) {
 		this.amountTobeTransferred = amountTobeTransferred;
 	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 	
-
 }
