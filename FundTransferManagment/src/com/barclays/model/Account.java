@@ -5,6 +5,7 @@ public class Account {
 	private Long accountId;
 	private String typeOfAccount;
 	private Long balance;
+	private User user;
 	
 	public Account() {
 		
@@ -34,5 +35,11 @@ public class Account {
 	public void setBalance(Long balance) {
 		this.balance = balance;
 	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}	
 	
 }

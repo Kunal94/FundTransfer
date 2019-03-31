@@ -16,7 +16,6 @@ public class InMemoryUserDAO implements UserDAO {
 		this.users = users;
 	}
 	
-	
 	@Override
 	public List<User> getUsers() {
 		List<User> userList = new ArrayList<>();

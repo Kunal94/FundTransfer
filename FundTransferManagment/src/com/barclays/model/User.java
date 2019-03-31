@@ -1,11 +1,16 @@
 package com.barclays.model;
 
-public class User {
+import java.util.List;
+
+import com.barclays.observer.TransactionObserver;
+
+public class User implements TransactionObserver {
 	
 	private Long userId;
 	private String userName;
 	private String password;
 	private String typeOfUser;
+	private List<User> users;
 
 	public User() {
 		
@@ -43,6 +48,14 @@ public class User {
 
 	public void setTypeOfUser(String typeOfUser) {
 		this.typeOfUser = typeOfUser;
+	}
+	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 }
