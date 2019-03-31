@@ -1,7 +1,9 @@
 package com.barclays.service;
 
 import com.barclays.dao.AccountDAO;
+import com.barclays.exception.InsufficientBalanceException;
 import com.barclays.exception.InvalidAccountException;
+import com.barclays.exception.InvalidTransactionAmountException;
 import com.barclays.model.Account;
 import com.barclays.model.Audit;
 import com.barclays.model.UserTransaction;
@@ -20,7 +22,7 @@ public class AccountService {
 	}
 
 	
-	public void transferBalance(UserTransaction userTransaction,AuditService auditService,Observable observable) throws InvalidAccountException {
+	public void transferBalance(UserTransaction userTransaction,AuditService auditService,Observable observable) throws InvalidAccountException,InsufficientBalanceException,InvalidTransactionAmountException {
 		Account sourceAccount = accountDAO.getAccountById(userTransaction.getFromAccountId());
 		Account destinationAccount = accountDAO.getAccountById(userTransaction.getToAccountId());
 		if (sourceAccount == null) {
@@ -28,6 +30,14 @@ public class AccountService {
 		}
 		if (destinationAccount == null) {
 			throw new InvalidAccountException("Invalid Destination Account");
+		}
+		
+		if (!isValidTransactionAmount(userTransaction)) {
+			throw new InvalidTransactionAmountException("Transferred amount must be greater than zero");
+		}
+		
+		if (!isSufficientBalance(sourceAccount, userTransaction)) {
+			throw new InsufficientBalanceException("Insufficient balance"); 
 		}
 		
 		auditService.insertAudit(loggedAuditDetails(userTransaction));
@@ -45,6 +55,21 @@ public class AccountService {
 		audit.setAmount(userTransaction.getAmountTobeTransferred());
 		audit.setUserId(userTransaction.getUserId());
 		return audit;
+	}
+	
+	private boolean isSufficientBalance(Account account,UserTransaction userTransaction) {
+		if ((account.getBalance() - userTransaction.getAmountTobeTransferred()) >= 0) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private boolean isValidTransactionAmount(UserTransaction userTransaction) {
+		if (userTransaction.getAmountTobeTransferred() > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }
