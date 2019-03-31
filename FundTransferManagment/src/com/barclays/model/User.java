@@ -58,4 +58,9 @@ public class User implements TransactionObserver {
 		this.users = users;
 	}
 
+	@Override
+	public void receiveMessage() {
+		
+	}
+
 }

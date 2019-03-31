@@ -1,11 +1,11 @@
 package com.barclays.service;
 
-import java.util.List;
-
 import com.barclays.dao.AccountDAO;
 import com.barclays.exception.InvalidAccountException;
 import com.barclays.model.Account;
+import com.barclays.model.Audit;
 import com.barclays.model.UserTransaction;
+import com.barclays.observer.Observable;
 
 public class AccountService {
 	
@@ -20,11 +20,27 @@ public class AccountService {
 	}
 
 	
-	public boolean transferBalance(UserTransaction userTransaction) throws InvalidAccountException {
+	public void transferBalance(UserTransaction userTransaction,AuditService auditService,Observable observable) throws InvalidAccountException {
 		Account sourceAccount = accountDAO.getAccountById(userTransaction.getFromAccountId());
 		Account destinationAccount = accountDAO.getAccountById(userTransaction.getToAccountId());
+		if (sourceAccount == null) {
+			throw new InvalidAccountException("Invalid Source Account");
+		}
+		if (destinationAccount == null) {
+			throw new InvalidAccountException("Invalid Destination Account");
+		}
 		
-		return accountDAO.transferBalance(userTransaction);
+		final Audit beforeTransationAudit = new Audit();
+		
+		auditService.insertAudit(beforeTransationAudit);
+		
+		if (accountDAO.transferBalance(userTransaction)) {
+			observable.doNotify();
+		}
+		
+		final Audit afterTransationAudit = new Audit();
+		auditService.insertAudit(afterTransationAudit);
+		
 	}
 
 }
