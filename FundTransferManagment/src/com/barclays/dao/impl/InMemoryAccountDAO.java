@@ -17,7 +17,6 @@ public class InMemoryAccountDAO implements AccountDAO {
 		this.accounts = accounts;
 	}
 	
-	
 	@Override
 	public List<Account> getAccounts() {
 		List<Account> accountList = new ArrayList<>();
@@ -31,13 +30,11 @@ public class InMemoryAccountDAO implements AccountDAO {
 
 	@Override
 	public Account getAccountById(long accountId) {
-		// TODO Auto-generated method stub
 		return accounts.get(accountId);
 	}
 
 	@Override
 	public boolean transferBalance(UserTransaction userTransaction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -46,8 +43,7 @@ public class InMemoryAccountDAO implements AccountDAO {
 	public boolean insertAccount(Account account) {
 		if (accounts.containsKey(account.getAccountId())) {
 			return false;
-		}
-		
+		}		
 		accounts.put(account.getAccountId(), account);
 		return true;
 	}
@@ -55,19 +51,16 @@ public class InMemoryAccountDAO implements AccountDAO {
 
 	@Override
 	public boolean deleteAccount(long accountId) {
-		// TODO Auto-generated method stub
 		if (accounts.containsKey(accountId)) {
 			accounts.remove(accountId);
 			return true;
-		}
-		
+		}		
 		return false;
 	}
 
 
 	@Override
 	public boolean updateAccount(Account account) {
-		// TODO Auto-generated method stub
 		if( accounts.replace(account.getAccountId(), account)!=null) {
 			return true;
 		}
