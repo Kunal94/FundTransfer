@@ -2,7 +2,7 @@ package com.barclays.dao;
 
 import java.util.List;
 
-import com.barclays.data.Audit;
+import com.barclays.model.Audit;
 
 public interface AuditDAO {
 	

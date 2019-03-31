@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.barclays.dao.AuditDAO;
-import com.barclays.data.Audit;
+import com.barclays.model.Audit;
 
 public class InMemoryAuditDAO implements AuditDAO {
 	Map<Long,Audit> audits;

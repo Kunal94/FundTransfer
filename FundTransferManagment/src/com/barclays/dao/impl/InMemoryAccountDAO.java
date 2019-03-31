@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.barclays.dao.AccountDAO;
-import com.barclays.data.Account;
-import com.barclays.data.UserTransaction;
+import com.barclays.model.Account;
+import com.barclays.model.UserTransaction;
 
 public class InMemoryAccountDAO implements AccountDAO {
 

@@ -2,7 +2,7 @@ package com.barclays.dao;
 
 import java.util.List;
 
-import com.barclays.data.User;
+import com.barclays.model.User;
 
 public interface UserDAO {
 	

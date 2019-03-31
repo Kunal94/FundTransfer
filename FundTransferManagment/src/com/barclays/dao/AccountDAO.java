@@ -2,8 +2,8 @@ package com.barclays.dao;
 
 import java.util.List;
 
-import com.barclays.data.Account;
-import com.barclays.data.UserTransaction;
+import com.barclays.model.Account;
+import com.barclays.model.UserTransaction;
 
 public interface AccountDAO {
 

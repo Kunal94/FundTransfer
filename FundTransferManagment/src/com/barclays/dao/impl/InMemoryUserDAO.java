@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.barclays.dao.UserDAO;
-import com.barclays.data.User;
+import com.barclays.model.User;
 
 public class InMemoryUserDAO implements UserDAO {
 	
