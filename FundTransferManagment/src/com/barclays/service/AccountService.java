@@ -21,7 +21,6 @@ public class AccountService {
 		return accountDAO;
 	}
 
-	
 	public void transferBalance(UserTransaction userTransaction,AuditService auditService,Observable observable) throws InvalidAccountException,InsufficientBalanceException,InvalidTransactionAmountException {
 		Account sourceAccount = accountDAO.getAccountById(userTransaction.getFromAccountId());
 		Account destinationAccount = accountDAO.getAccountById(userTransaction.getToAccountId());
@@ -41,11 +40,22 @@ public class AccountService {
 		}
 		
 		auditService.insertAudit(loggedAuditDetails(userTransaction));
-		if (accountDAO.transferBalance(userTransaction)) {
+		debitFromSourceAccount(sourceAccount, userTransaction);
+		creditToDestinationAccount(destinationAccount, userTransaction);
+		if (accountDAO.updateAccount(sourceAccount) && accountDAO.updateAccount(destinationAccount)) {
 			observable.doNotify();
 		}
-		
 		auditService.insertAudit(loggedAuditDetails(userTransaction));
+	}
+	
+	
+	private void debitFromSourceAccount(Account account, UserTransaction userTransaction) {
+		account.setBalance(account.getBalance() - userTransaction.getAmountTobeTransferred());
+		
+	}
+	
+	private void creditToDestinationAccount(Account account,UserTransaction userTransaction) {
+		account.setBalance(account.getBalance()+userTransaction.getAmountTobeTransferred());
 	}
 	
 	private Audit loggedAuditDetails(UserTransaction userTransaction) {

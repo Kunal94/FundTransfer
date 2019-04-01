@@ -7,7 +7,6 @@ import java.util.Set;
 
 import com.barclays.dao.AccountDAO;
 import com.barclays.model.Account;
-import com.barclays.model.UserTransaction;
 
 public class InMemoryAccountDAO implements AccountDAO {
 
@@ -32,12 +31,6 @@ public class InMemoryAccountDAO implements AccountDAO {
 	public Account getAccountById(long accountId) {
 		return accounts.get(accountId);
 	}
-
-	@Override
-	public boolean transferBalance(UserTransaction userTransaction) {
-		return false;
-	}
-
 
 	@Override
 	public boolean insertAccount(Account account) {
