@@ -10,7 +10,7 @@ import com.barclays.dao.AuditDAO;
 import com.barclays.model.Audit;
 
 public class InMemoryAuditDAO implements AuditDAO {
-	Map<Long,Audit> audits;
+	private Map<Long,Audit> audits;
 	
 	public InMemoryAuditDAO() {
 		audits = new HashMap<>();

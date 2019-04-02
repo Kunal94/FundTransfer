@@ -2,17 +2,17 @@ package com.barclays.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.barclays.dao.UserDAO;
 import com.barclays.model.User;
 
 public class InMemoryUserDAO implements UserDAO {
 	
-	Map<Long,User> users;
+	private ConcurrentHashMap<Long,User> users;
 	
-	public InMemoryUserDAO(Map<Long,User> users) {
+	public InMemoryUserDAO(ConcurrentHashMap<Long,User> users) {
 		this.users = users;
 	}
 	

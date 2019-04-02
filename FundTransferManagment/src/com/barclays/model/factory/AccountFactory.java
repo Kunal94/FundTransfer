@@ -1,4 +1,4 @@
-package com.barclays.dao.factory;
+package com.barclays.model.factory;
 
 import com.barclays.constant.AccountType;
 import com.barclays.model.Account;

@@ -2,17 +2,17 @@ package com.barclays.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.barclays.dao.AccountDAO;
 import com.barclays.model.Account;
 
 public class InMemoryAccountDAO implements AccountDAO {
 
-	private Map<Long,Account> accounts;
+	private ConcurrentHashMap<Long,Account> accounts;
 	
-	public InMemoryAccountDAO(Map<Long, Account> accounts) {
+	public InMemoryAccountDAO(ConcurrentHashMap<Long, Account> accounts) {
 		this.accounts = accounts;
 	}
 	

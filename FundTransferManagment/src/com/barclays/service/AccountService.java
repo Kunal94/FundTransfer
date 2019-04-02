@@ -40,11 +40,23 @@ public class AccountService {
 		}
 		
 		auditService.insertAudit(loggedAuditDetails(userTransaction));
-		debitFromSourceAccount(sourceAccount, userTransaction);
-		creditToDestinationAccount(destinationAccount, userTransaction);
-		if (accountDAO.updateAccount(sourceAccount) && accountDAO.updateAccount(destinationAccount)) {
+		boolean creditFlag = false;
+		boolean debitFlag = false;
+		synchronized (sourceAccount) {
+			debitFromSourceAccount(sourceAccount, userTransaction);
+			debitFlag = accountDAO.updateAccount(sourceAccount);
+		}
+		synchronized (destinationAccount) {
+			creditToDestinationAccount(destinationAccount, userTransaction);
+			creditFlag = accountDAO.updateAccount(destinationAccount);
+		}
+		
+		if (creditFlag && debitFlag) {
 			observable.doNotify();
 		}
+		/*
+		Yet to code in case if updation failed for any of the account
+		*/
 		auditService.insertAudit(loggedAuditDetails(userTransaction));
 	}
 	
